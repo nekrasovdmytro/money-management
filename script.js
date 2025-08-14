@@ -584,6 +584,83 @@ class FinanceManager {
             }
         }, 5000);
     }
+
+    // Ukrainian translations of ALL Bible verses (ONLY Bible verses, not other text)
+    ukrainianVerses = {
+        // Biblical Wisdom Tab - ALL verses
+        "Honor the Lord with your wealth and with the firstfruits of all your produce.": "Шануй Господа з маєтку твого та з первинок усього врожаю твого.",
+        "Each one must give as he has decided in his heart, not reluctantly or under compulsion, for God loves a cheerful giver.": "Кожен нехай дає так, як він вирішив у серці своєму, не з жалем і не з примусом, бо Бог любить радісного давача.",
+        "It is more blessed to give than to receive.": "Блаженніше давати, ніж приймати.",
+        "The blessing of the Lord makes rich, and he adds no sorrow with it.": "Благословення Господнє багатить, і не додає до нього смутку.",
+        "A good man leaves an inheritance to his children's children.": "Добрий чоловік залишає спадщину синам синів своїх.",
+        "Wealth gained hastily will dwindle, but whoever gathers little by little will increase it.": "Багатство, набуте поспіхом, зменшиться, а хто збирає поступово, той його збільшить.",
+        "For the love of money is a root of all kinds of evils.": "Бо любов до грошей є корінь усього злого.",
+        "No one can serve two masters... You cannot serve God and money.": "Ніхто не може служити двом панам... Не можете служити Богу й мамоні.",
+        "Keep your life free from love of money, and be content with what you have.": "Нехай буде ваше життя вільним від любові до грошей, і будьте задоволені тим, що маєте.",
+        "The plans of the diligent lead surely to abundance, but everyone who is hasty comes only to poverty.": "Плани старанного ведуть до достатку, а кожен поспішний приходить до бідності.",
+        "In all toil there is profit, but mere talk tends only to poverty.": "У всякій праці є користь, а порожня балаканина веде до бідності.",
+        "The wise store up choice food and olive oil, but fools gulp theirs down.": "Мудрі зберігають вибірну їжу та оливкову олію, а дурні поглинають своє.",
+        "The rich rules over the poor, and the borrower is the slave of the lender.": "Багатий панує над бідним, а позичальник є рабом того, хто позичає.",
+        "Whoever is generous to the poor lends to the Lord, and he will repay him for his deed.": "Хто милосердний до бідного, той позичає Господу, і Він відплатить йому за його вчинок.",
+        "Better is a little with righteousness than great revenues with injustice.": "Краще трохи з правдою, ніж великі доходи з неправдою.",
+        "A faithful man will abound with blessings, but whoever hastens to be rich will not go unpunished.": "Вірний чоловік буде мати багато благословень, а хто поспішає збагатитися, той не залишиться без покарання.",
+        "Give, and it will be given to you. Good measure, pressed down, shaken together, running over.": "Давайте, і дасться вам. Мірою доброю, натиснутою, струшеною й переповненою.",
+        "But seek first the kingdom of God and his righteousness, and all these things will be added to you.": "А шукайте спочатку Царства Божого та правди Його, і це все додасться вам.",
+        "For where your treasure is, there your heart will be also.": "Бо де скарб ваш, там і серце ваше буде.",
+        
+        // Rich People Tab - ALL verses
+        "Abraham was very rich in livestock, in silver, and in gold.": "Аврам був дуже багатий худобою, сріблом і золотом.",
+        "Solomon's wealth and wisdom surpassed all the kings of the earth.": "Багатство та мудрість Соломона перевершили всіх царів землі.",
+        "Job was the greatest of all the people of the east.": "Йов був найбільшим з усіх людей сходу.",
+        "Wealth brings many friends, but a poor man is deserted by his friend.": "Багатство приносить багато друзів, а бідного покидає його друг.",
+        "The rich man's wealth is his strong city, and like a high wall in his imagination.": "Багатство багатого — це його міцне місто, і як висока стіна в його уяві.",
+        "Whoever oppresses the poor to increase his wealth and whoever gives to the rich, will only come to poverty.": "Хто пригнічує бідного, щоб збільшити своє багатство, і хто дає багатому, той прийде до бідності.",
+        "The rich and the poor meet together; the Lord is the maker of them all.": "Багатий та бідний зустрічаються разом; Господь є Творцем їх усіх.",
+        "Whoever has a bountiful eye will be blessed, for he shares his bread with the poor.": "Хто має щедре око, той буде благословенний, бо він ділиться хлібом своїм з бідним.",
+        "Do not toil to acquire wealth; be discerning enough to desist.": "Не трудися, щоб набути багатства; будь розумним і перестань.",
+        "When your eyes light on it, it is gone, for suddenly it sprouts wings, flying like an eagle toward heaven.": "Коли очі твої побачать його, воно зникне, бо раптом воно випустить крила і полетить, як орел, до неба.",
+        "A good man leaves an inheritance to his children's children, but the sinner's wealth is laid up for the righteous.": "Добрий чоловік залишає спадщину синам синів своїх, а багатство грішника зберігається для праведного.",
+        
+        // Banner verses
+        "The blessing of the Lord makes rich, and he adds no sorrow with it.": "Благословення Господнє багатить, і не додає до нього смутку.",
+        "For where your treasure is, there your heart will be also.": "Бо де скарб ваш, там і серце ваше буде.",
+        "The rich rule over the poor, and the borrower is slave to the lender.": "Багатий панує над бідним, а позичальник є рабом того, хто позичає.",
+        
+        // Bible verse categories (ONLY Bible-related categories)
+        "Tithing": "Десятина",
+        "Giving": "Давання", 
+        "Generosity": "Щедрість",
+        "Blessing": "Благословення",
+        "Legacy": "Спадщина",
+        "Patience": "Терпіння",
+        "Warning": "Попередження",
+        "Priority": "Пріоритет",
+        "Contentment": "Задоволеність",
+        "Planning": "Планування",
+        "Work": "Праця",
+        "Saving": "Збереження",
+        "Debt": "Борг",
+        "Charity": "Милостиня",
+        "Integrity": "Чесність",
+        "Faithfulness": "Вірність",
+        "Power": "Влада",
+        "Influence": "Вплив",
+        "Security": "Безпека",
+        "Justice": "Справедливість",
+        "Equality": "Рівність",
+        "Wisdom": "Мудрість",
+        "Temporary": "Тимчасове",
+        "Honor": "Честь",
+        "Protection": "Захист",
+        "Friendship": "Дружба",
+        "Control": "Контроль",
+        "Unity": "Єдність",
+        
+        // Bible character names
+        "Abraham": "Аврам",
+        "Solomon": "Соломон", 
+        "Job": "Йов"
+    };
 }
 
 // Calculator functionality
@@ -726,6 +803,47 @@ function exportToExcel() {
     XLSX.writeFile(wb, fileName);
     
     financeManager.showNotification('Excel file exported successfully!', 'success');
+}
+
+// Global translation state
+let isUkrainian = false;
+
+// Toggle Ukrainian translation function (ONLY Bible verses)
+function toggleUkrainianTranslation() {
+    isUkrainian = !isUkrainian;
+    const button = document.querySelector('button[onclick="toggleUkrainianTranslation()"]');
+    
+    if (isUkrainian) {
+        button.innerHTML = '<i class="fas fa-language me-2"></i>Show English';
+        translateToUkrainian();
+        financeManager.showNotification('Bible verses translated to Ukrainian', 'success');
+    } else {
+        button.innerHTML = '<i class="fas fa-language me-2"></i>Translate Bible Verses';
+        translateToEnglish();
+        financeManager.showNotification('Bible verses back to English', 'success');
+    }
+}
+
+function translateToUkrainian() {
+    const verseElements = document.querySelectorAll('.verse-text, .verse-category');
+    verseElements.forEach(element => {
+        const originalText = element.getAttribute('data-original') || element.textContent;
+        element.setAttribute('data-original', originalText);
+        
+        if (financeManager.ukrainianVerses[originalText]) {
+            element.textContent = financeManager.ukrainianVerses[originalText];
+        }
+    });
+}
+
+function translateToEnglish() {
+    const verseElements = document.querySelectorAll('.verse-text, .verse-category');
+    verseElements.forEach(element => {
+        const originalText = element.getAttribute('data-original');
+        if (originalText) {
+            element.textContent = originalText;
+        }
+    });
 }
 
 // Initialize the application

@@ -57,12 +57,12 @@
             border: none;
             color: var(--primary-color);
             font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 12px 12px 0 0;
+            padding: 8px 12px;
+            border-radius: 8px 8px 0 0;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .nav-tabs .nav-link:hover {
@@ -407,11 +407,11 @@
             <!-- Main Currency Selector -->
             <div class="currency-selector-banner">
                 <div class="row align-items-center">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <i class="fas fa-globe me-2"></i>
                         <strong>Main Display Currency:</strong>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <select class="form-select" id="mainCurrency" style="max-width: 250px;">
                             <optgroup label="Major Fiat">
                                 <option value="USD">USD - US Dollar</option>
@@ -612,6 +612,11 @@
                             </optgroup>
                         </select>
                     </div>
+                    <div class="col-md-4 text-end">
+                        <!-- <button class="btn btn-outline-light" onclick="toggleUkrainianTranslation()">
+                            <i class="fas fa-language me-2"></i>Translate Bible Verses
+                        </button> -->
+                    </div>
                 </div>
             </div>
 
@@ -645,6 +650,11 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="biblical-tab" data-bs-toggle="tab" data-bs-target="#biblical" type="button" role="tab">
                         <i class="fas fa-cross me-2"></i>Biblical Wisdom
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="rich-people-tab" data-bs-toggle="tab" data-bs-target="#rich-people" type="button" role="tab">
+                        <i class="fas fa-crown me-2"></i>Rich People & Influence
                     </button>
                 </li>
             </ul>
@@ -1406,6 +1416,86 @@
                                                 <span class="verse-category">Priority</span>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rich People & Influence Tab -->
+                <div class="tab-pane fade" id="rich-people" role="tabpanel">
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="verse-card">
+                                <h4><i class="fas fa-crown me-2"></i>Rich People in the Bible</h4>
+                                <p>"The rich rule over the poor, and the borrower is slave to the lender." - Proverbs 22:7</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-user-tie me-2"></i>Rich People from Bible</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="verse-card">
+                                        <div class="verse-text">"Abraham was very rich in livestock, in silver, and in gold."</div>
+                                        <div class="verse-reference">Genesis 13:2</div>
+                                        <span class="verse-category">Abraham</span>
+                                    </div>
+                                    <div class="verse-card">
+                                        <div class="verse-text">"Solomon's wealth and wisdom surpassed all the kings of the earth."</div>
+                                        <div class="verse-reference">1 Kings 10:23</div>
+                                        <span class="verse-category">Solomon</span>
+                                    </div>
+                                    <div class="verse-card">
+                                        <div class="verse-text">"Job was the greatest of all the people of the east."</div>
+                                        <div class="verse-reference">Job 1:3</div>
+                                        <span class="verse-category">Job</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-gavel me-2"></i>Wealth & Influence</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="verse-card">
+                                        <div class="verse-text">"The rich rule over the poor, and the borrower is slave to the lender."</div>
+                                        <div class="verse-reference">Proverbs 22:7</div>
+                                        <span class="verse-category">Power</span>
+                                    </div>
+                                    <div class="verse-card">
+                                        <div class="verse-text">"Wealth brings many friends, but a poor man is deserted by his friend."</div>
+                                        <div class="verse-reference">Proverbs 19:4</div>
+                                        <span class="verse-category">Influence</span>
+                                    </div>
+                                    <div class="verse-card">
+                                        <div class="verse-text">"The rich man's wealth is his strong city, and like a high wall in his imagination."</div>
+                                        <div class="verse-reference">Proverbs 18:11</div>
+                                        <span class="verse-category">Protection</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-lightbulb me-2"></i>Key Message</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="alert alert-info">
+                                        <h6><i class="fas fa-info-circle me-2"></i>Wealth Brings Influence</h6>
+                                        <p><strong>Biblical Truth:</strong> The Bible shows that rich people have influence and power. Abraham, Solomon, and Job were wealthy and had significant impact on their communities and nations.</p>
+                                        <p><strong>Key Principle:</strong> "The rich rule over the poor" - those who have money have the ability to influence others, control situations, and shape society.</p>
                                     </div>
                                 </div>
                             </div>
