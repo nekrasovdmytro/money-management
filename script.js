@@ -516,11 +516,54 @@ class FinanceManager {
 
     getCurrencySymbol(currency) {
         const symbols = {
+            // Major Fiat
             'USD': '$', 'EUR': '€', 'GBP': '£', 'JPY': '¥', 'CAD': 'C$',
-            'AUD': 'A$', 'CHF': 'CHF', 'CNY': '¥', 'SEK': 'kr', 'NZD': 'NZ$',
-            'MXN': '$', 'SGD': 'S$', 'HKD': 'HK$', 'NOK': 'kr', 'KRW': '₩',
-            'TRY': '₺', 'RUB': '₽', 'INR': '₹', 'BRL': 'R$', 'ZAR': 'R',
-            'BTC': '₿', 'ETH': 'Ξ', 'BNB': 'BNB', 'USDT': 'USDT', 'USDC': 'USDC'
+            'AUD': 'A$', 'CHF': 'CHF', 'CNY': '¥', 'UAH': '₴', 'PLN': 'zł',
+            'CZK': 'Kč', 'HUF': 'Ft', 'RON': 'lei', 'BGN': 'лв', 'HRK': 'kn',
+            'RSD': 'дин', 'MKD': 'ден', 'ALL': 'L', 'MDL': 'L', 'GEL': '₾',
+            'AMD': '֏', 'AZN': '₼', 'KZT': '₸', 'KGS': 'с', 'TJS': 'ЅМ',
+            'TMT': 'T', 'UZS': 'so\'m', 'RUB': '₽', 'BYN': 'Br', 'SEK': 'kr',
+            'NOK': 'kr', 'DKK': 'kr', 'ISK': 'kr', 'NZD': 'NZ$', 'SGD': 'S$',
+            'HKD': 'HK$', 'KRW': '₩', 'TWD': 'NT$', 'THB': '฿', 'MYR': 'RM',
+            'IDR': 'Rp', 'PHP': '₱', 'VND': '₫', 'INR': '₹', 'PKR': '₨',
+            'BDT': '৳', 'LKR': 'Rs', 'NPR': '₨', 'MNT': '₮', 'MXN': '$',
+            'BRL': 'R$', 'ARS': '$', 'CLP': '$', 'COP': '$', 'PEN': 'S/',
+            'UYU': '$U', 'PYG': '₲', 'BOB': 'Bs', 'VES': 'Bs', 'ZAR': 'R',
+            'EGP': 'E£', 'NGN': '₦', 'KES': 'KSh', 'GHS': 'GH₵', 'MAD': 'د.م.',
+            'TND': 'د.ت', 'TRY': '₺', 'ILS': '₪', 'JOD': 'د.ا', 'LBP': 'ل.ل',
+            'SAR': 'ر.س', 'AED': 'د.إ', 'QAR': 'ر.ق', 'KWD': 'د.ك', 'BHD': 'د.ب',
+            'OMR': 'ر.ع', 'YER': 'ر.ي', 'IRR': '﷼', 'AFN': '؋',
+            
+            // Cryptocurrencies
+            'BTC': '₿', 'ETH': 'Ξ', 'BNB': 'BNB', 'XRP': 'XRP', 'ADA': 'ADA',
+            'SOL': 'SOL', 'DOT': 'DOT', 'DOGE': 'Ð', 'AVAX': 'AVAX', 'MATIC': 'MATIC',
+            'LTC': 'Ł', 'BCH': 'BCH', 'LINK': 'LINK', 'UNI': 'UNI', 'ATOM': 'ATOM',
+            'ETC': 'ETC', 'XLM': 'XLM', 'ALGO': 'ALGO', 'VET': 'VET', 'ICP': 'ICP',
+            'FIL': 'FIL', 'TRX': 'TRX', 'NEAR': 'NEAR', 'APT': 'APT', 'OP': 'OP',
+            'ARB': 'ARB', 'MKR': 'MKR', 'AAVE': 'AAVE', 'COMP': 'COMP', 'SNX': 'SNX',
+            'SUSHI': 'SUSHI', 'CRV': 'CRV', 'YFI': 'YFI', 'CAKE': 'CAKE', '1INCH': '1INCH',
+            'KNC': 'KNC', 'BAND': 'BAND', 'OCEAN': 'OCEAN', 'API3': 'API3', 'UMA': 'UMA',
+            'BADGER': 'BADGER', 'RAD': 'RAD', 'MASK': 'MASK', 'ENS': 'ENS', 'LDO': 'LDO',
+            'RPL': 'RPL', 'FRAX': 'FRAX', 'LUSD': 'LUSD', 'SUSD': 'sUSD', 'MIM': 'MIM',
+            'FEI': 'FEI', 'TRIBE': 'TRIBE', 'ALUSD': 'alUSD', 'USDN': 'USDN', 'USDK': 'USDK',
+            'USDJ': 'USDJ', 'USDH': 'USDH', 'USDD': 'USDD',
+            
+            // Stablecoins
+            'USDT': 'USDT', 'USDC': 'USDC', 'DAI': 'DAI', 'BUSD': 'BUSD', 'TUSD': 'TUSD',
+            'USDP': 'USDP', 'GUSD': 'GUSD',
+            
+            // Gaming & Metaverse
+            'AXS': 'AXS', 'SLP': 'SLP', 'GALA': 'GALA', 'MANA': 'MANA', 'SAND': 'SAND',
+            'ALICE': 'ALICE', 'HERO': 'HERO', 'TLM': 'TLM', 'GHST': 'GHST', 'ENJ': 'ENJ',
+            'CHZ': 'CHZ', 'HOT': 'HOT', 'DENT': 'DENT', 'WIN': 'WIN', 'BTT': 'BTT',
+            'STMX': 'STMX', 'ANKR': 'ANKR', 'COTI': 'COTI', 'HBAR': 'HBAR', 'VTHO': 'VTHO',
+            'ONE': 'ONE', 'IOTA': 'MIOTA', 'NANO': 'XNO', 'XRB': 'XRB',
+            
+            // Privacy & Meme
+            'XMR': 'XMR', 'ZEC': 'ZEC', 'DASH': 'DASH', 'PIVX': 'PIVX', 'BEAM': 'BEAM',
+            'GRIN': 'GRIN', 'XHV': 'XHV', 'XEQ': 'XEQ', 'XWP': 'XWP', 'XMV': 'XMV',
+            'SHIB': 'SHIB', 'BABYDOGE': 'BABYDOGE', 'SAFEMOON': 'SAFEMOON', 'ELON': 'ELON',
+            'FLOKI': 'FLOKI', 'BONK': 'BONK', 'PEPE': 'PEPE', 'WOJAK': 'WOJAK', 'MOON': 'MOON'
         };
         return symbols[currency] || currency;
     }
