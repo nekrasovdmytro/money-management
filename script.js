@@ -15,7 +15,49 @@ class FinanceManager {
             'Mutual Funds', 'ETFs', 'Commodities', 'Precious Metals',
             'Startup Investment', 'Other'
         ];
-        this.currencies = ['USD', 'EUR', 'GBP', 'BTC', 'ETH'];
+        this.currencies = [
+            // Major Fiat Currencies
+            'USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY', 'SEK', 'NZD',
+            'MXN', 'SGD', 'HKD', 'NOK', 'KRW', 'TRY', 'RUB', 'INR', 'BRL', 'ZAR',
+            'PLN', 'THB', 'IDR', 'MYR', 'PHP', 'CZK', 'HUF', 'ILS', 'CLP', 'COP',
+            'EGP', 'PKR', 'BDT', 'VND', 'NGN', 'ARS', 'PEN', 'UAH', 'RON', 'BGN',
+            
+            // Major Cryptocurrencies
+            'BTC', 'ETH', 'BNB', 'XRP', 'ADA', 'SOL', 'DOT', 'DOGE', 'AVAX', 'MATIC',
+            'LTC', 'BCH', 'LINK', 'UNI', 'ATOM', 'ETC', 'XLM', 'ALGO', 'VET', 'ICP',
+            'FIL', 'TRX', 'FTT', 'NEAR', 'APT', 'OP', 'ARB', 'MKR', 'AAVE', 'COMP',
+            'SNX', 'SUSHI', 'CRV', 'YFI', 'BAL', 'REN', 'ZRX', 'BAT', 'MANA', 'SAND',
+            'ENJ', 'CHZ', 'HOT', 'DENT', 'WIN', 'BTT', 'STMX', 'ANKR', 'COTI', 'HBAR',
+            'VTHO', 'ONE', 'IOTA', 'NANO', 'XRB', 'XMR', 'ZEC', 'DASH', 'XEM', 'WAVES',
+            'QTUM', 'OMG', 'ZIL', 'ICX', 'AION', 'WAN', 'ONT', 'NEO', 'GAS', 'VET',
+            'THETA', 'TFUEL', 'HIVE', 'STEEM', 'SBD', 'EOS', 'BTS', 'BTS', 'KEY', 'DGB',
+            'RVN', 'ERG', 'KDA', 'FLUX', 'XEC', 'BABYDOGE', 'SHIB', 'SAFEMOON', 'ELON', 'FLOKI',
+            
+            // DeFi Tokens
+            'CAKE', 'BAKE', 'DODO', '1INCH', 'KNC', 'BAND', 'OCEAN', 'API3', 'UMA', 'BADGER',
+            'RAD', 'MASK', 'ENS', 'LDO', 'RPL', 'FRAX', 'USDC', 'USDT', 'DAI', 'BUSD',
+            'TUSD', 'USDP', 'GUSD', 'FRAX', 'LUSD', 'SUSD', 'MIM', 'FEI', 'TRIBE', 'ALUSD',
+            
+            // Layer 2 and Scaling Solutions
+            'IMX', 'LOOP', 'METIS', 'BOBA', 'ZKS', 'STARK', 'POLYGON', 'ARBITRUM', 'OPTIMISM', 'BASE',
+            
+            // Gaming and Metaverse
+            'AXS', 'SLP', 'GALA', 'ENJ', 'MANA', 'SAND', 'ALICE', 'HERO', 'TLM', 'GHST',
+            'ALPHA', 'ALPHA', 'ALPHA', 'ALPHA', 'ALPHA', 'ALPHA', 'ALPHA', 'ALPHA', 'ALPHA', 'ALPHA',
+            
+            // AI and Data
+            'OCEAN', 'FET', 'AGIX', 'NMR', 'MLN', 'BAND', 'LINK', 'API3', 'UMA', 'DIA',
+            
+            // Privacy Coins
+            'XMR', 'ZEC', 'DASH', 'PIVX', 'BEAM', 'GRIN', 'XHV', 'XEQ', 'XWP', 'XMV',
+            
+            // Meme Coins
+            'DOGE', 'SHIB', 'BABYDOGE', 'SAFEMOON', 'ELON', 'FLOKI', 'BONK', 'PEPE', 'WOJAK', 'MOON',
+            
+            // Stablecoins
+            'USDT', 'USDC', 'DAI', 'BUSD', 'TUSD', 'USDP', 'GUSD', 'FRAX', 'LUSD', 'SUSD',
+            'MIM', 'FEI', 'TRIBE', 'ALUSD', 'USDN', 'USDK', 'USDJ', 'USDH', 'USDD', 'USDK'
+        ];
         
         this.init();
     }
