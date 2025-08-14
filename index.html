@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Manager - Secure & Local</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --light-bg: #ecf0f1;
+            --dark-bg: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        .security-banner {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            padding: 15px 25px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .nav-tabs .nav-link.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            border: none;
+            border-radius: 10px;
+        }
+
+        .btn-warning {
+            background: var(--warning-color);
+            border: none;
+            border-radius: 10px;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            border: none;
+            border-radius: 10px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .expense-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .investment-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .summary-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .summary-total {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .summary-expenses {
+            background: linear-gradient(45deg, var(--danger-color), #c0392b);
+        }
+
+        .summary-investments {
+            background: linear-gradient(45deg, var(--success-color), #229954);
+        }
+
+        .summary-remaining {
+            background: linear-gradient(45deg, var(--warning-color), #e67e22);
+        }
+
+        .hidden {
+            filter: blur(5px);
+            pointer-events: none;
+        }
+
+        .calculator {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .calc-btn {
+            width: 60px;
+            height: 60px;
+            margin: 5px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .calc-display {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 24px;
+            text-align: right;
+            margin-bottom: 15px;
+            min-height: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .nav-tabs .nav-link {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .calc-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 16px;
+            }
+        }
+
+        .risk-level {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .risk-low { background: var(--success-color); color: white; }
+        .risk-medium { background: var(--warning-color); color: white; }
+        .risk-high { background: var(--danger-color); color: white; }
+
+        .advice-card {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .biblical-banner {
+            background: linear-gradient(45deg, #8B4513, #D2691E);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .verse-card {
+            background: linear-gradient(45deg, #2E8B57, #3CB371);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid #FFD700;
+        }
+
+        .verse-reference {
+            font-weight: bold;
+            color: #FFD700;
+            font-size: 0.9em;
+        }
+
+        .verse-text {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .verse-category {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            display: inline-block;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-container p-4">
+            <!-- Security Banner -->
+            <div class="security-banner">
+                <i class="fas fa-shield-alt me-2"></i>
+                <strong>🔒 100% Secure & Local</strong> - All data stays on your device. Nothing is sent to any server.
+            </div>
+            
+            <!-- Biblical Wisdom Banner -->
+            <div class="biblical-banner">
+                <i class="fas fa-cross me-2"></i>
+                <strong>"The blessing of the Lord makes rich, and he adds no sorrow with it."</strong> - Proverbs 10:22
+            </div>
+
+            <!-- Navigation -->
+            <ul class="nav nav-tabs" id="mainTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard" type="button" role="tab">
+                        <i class="fas fa-chart-line me-2"></i>Dashboard
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="add-tab" data-bs-toggle="tab" data-bs-target="#add" type="button" role="tab">
+                        <i class="fas fa-plus me-2"></i>Add Transaction
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="calculator-tab" data-bs-toggle="tab" data-bs-target="#calculator" type="button" role="tab">
+                        <i class="fas fa-calculator me-2"></i>Calculator
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="advice-tab" data-bs-toggle="tab" data-bs-target="#advice" type="button" role="tab">
+                        <i class="fas fa-lightbulb me-2"></i>Financial Advice
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="risk-tab" data-bs-toggle="tab" data-bs-target="#risk" type="button" role="tab">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Risk Management
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="biblical-tab" data-bs-toggle="tab" data-bs-target="#biblical" type="button" role="tab">
+                        <i class="fas fa-cross me-2"></i>Biblical Wisdom
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="mainTabsContent">
+                <!-- Dashboard Tab -->
+                <div class="tab-pane fade show active" id="dashboard" role="tabpanel">
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3><i class="fas fa-chart-pie me-2"></i>Financial Overview</h3>
+                                <div>
+                                    <button class="btn btn-warning me-2" onclick="toggleNumbers()">
+                                        <i class="fas fa-eye-slash me-1"></i>Hide Numbers
+                                    </button>
+                                    <button class="btn btn-success me-2" onclick="copyToClipboard()">
+                                        <i class="fas fa-copy me-1"></i>Copy to Notes
+                                    </button>
+                                    <button class="btn btn-primary" onclick="exportToExcel()">
+                                        <i class="fas fa-file-excel me-1"></i>Export Excel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summary Cards -->
+                    <div class="row" id="summaryCards">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="summary-card summary-total">
+                                <h4>Total Budget</h4>
+                                <h2 id="totalBudget">$0</h2>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="summary-card summary-expenses">
+                                <h4>Total Spent</h4>
+                                <h2 id="totalSpent">$0</h2>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="summary-card summary-investments">
+                                <h4>Total Invested</h4>
+                                <h2 id="totalInvested">$0</h2>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="summary-card summary-remaining">
+                                <h4>Remaining</h4>
+                                <h2 id="remaining">$0</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-chart-pie me-2"></i>Expenses by Category</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="expensesChart" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-chart-bar me-2"></i>Investments by Type</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="investmentsChart" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Threshold Settings -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-bullseye me-2"></i>Budget Threshold</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="budgetThreshold" class="form-label">Monthly Budget Limit</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" id="budgetThreshold" placeholder="Enter amount">
+                                                <select class="form-select" id="budgetCurrency" style="max-width: 100px;">
+                                                    <option value="USD">USD</option>
+                                                    <option value="EUR">EUR</option>
+                                                    <option value="GBP">GBP</option>
+                                                    <option value="BTC">BTC</option>
+                                                    <option value="ETH">ETH</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mt-4">
+                                                <div class="progress" style="height: 25px;">
+                                                    <div class="progress-bar" id="budgetProgress" role="progressbar" style="width: 0%"></div>
+                                                </div>
+                                                <small class="text-muted" id="budgetStatus">Set a budget threshold to track spending</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suggestions -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-lightbulb me-2"></i>Smart Suggestions</h5>
+                                </div>
+                                <div class="card-body" id="suggestions">
+                                    <!-- Suggestions will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Transactions -->
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-receipt me-2"></i>Recent Expenses</h5>
+                                </div>
+                                <div class="card-body" id="recentExpenses">
+                                    <!-- Recent expenses will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-chart-line me-2"></i>Recent Investments</h5>
+                                </div>
+                                <div class="card-body" id="recentInvestments">
+                                    <!-- Recent investments will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Transaction Tab -->
+                <div class="tab-pane fade" id="add" role="tabpanel">
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-plus me-2"></i>Add New Transaction</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="transactionForm">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="transactionType" class="form-label">Transaction Type</label>
+                                                    <select class="form-select" id="transactionType" name="transactionType" required>
+                                                        <option value="">Select type</option>
+                                                        <option value="expense">Expense</option>
+                                                        <option value="investment">Investment</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="amount" class="form-label">Amount</label>
+                                                    <input type="number" class="form-control" id="amount" name="amount" step="0.01" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="currency" class="form-label">Currency</label>
+                                                    <select class="form-select" id="currency" name="currency" required>
+                                                        <option value="USD">USD</option>
+                                                        <option value="EUR">EUR</option>
+                                                        <option value="GBP">GBP</option>
+                                                        <option value="BTC">BTC</option>
+                                                        <option value="ETH">ETH</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="date" class="form-label">Date</label>
+                                                    <input type="date" class="form-control" id="date" name="date" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="category" class="form-label">Category</label>
+                                                    <select class="form-select" id="category" name="category" required>
+                                                        <option value="">Select category</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="description" class="form-label">Description</label>
+                                                    <input type="text" class="form-control" id="description" name="description" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save me-2"></i>Add Transaction
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculator Tab -->
+                <div class="tab-pane fade" id="calculator" role="tabpanel">
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="calculator">
+                                <div class="calc-display" id="calcDisplay">0</div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <button class="btn btn-secondary calc-btn" onclick="calcClear()">C</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-secondary calc-btn" onclick="calcDelete()">⌫</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-warning calc-btn" onclick="calcOperation('%')">%</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-warning calc-btn" onclick="calcOperation('/')">÷</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <button class="btn btn-light calc-btn" onclick="calcNumber('7')">7</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-light calc-btn" onclick="calcNumber('8')">8</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-light calc-btn" onclick="calcNumber('9')">9</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-warning calc-btn" onclick="calcOperation('*')">×</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <button class="btn btn-light calc-btn" onclick="calcNumber('4')">4</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-light calc-btn" onclick="calcNumber('5')">5</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-light calc-btn" onclick="calcNumber('6')">6</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-warning calc-btn" onclick="calcOperation('-')">-</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <button class="btn btn-light calc-btn" onclick="calcNumber('1')">1</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-light calc-btn" onclick="calcNumber('2')">2</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-light calc-btn" onclick="calcNumber('3')">3</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-warning calc-btn" onclick="calcOperation('+')">+</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <button class="btn btn-light calc-btn" onclick="calcNumber('0')">0</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-light calc-btn" onclick="calcNumber('.')">.</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn btn-success calc-btn" onclick="calcEquals()" style="width: 100%;">=</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financial Advice Tab -->
+                <div class="tab-pane fade" id="advice" role="tabpanel">
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="advice-card">
+                                <h4><i class="fas fa-graduation-cap me-2"></i>Essential Financial Principles</h4>
+                                <p>Master these fundamental principles for better financial health</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-piggy-bank me-2"></i>50/30/20 Rule</h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        <li><strong>50%</strong> - Needs (housing, food, utilities)</li>
+                                        <li><strong>30%</strong> - Wants (entertainment, dining out)</li>
+                                        <li><strong>20%</strong> - Savings & Investments</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-shield-alt me-2"></i>Emergency Fund</h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Save 3-6 months of expenses</li>
+                                        <li>Keep in high-yield savings account</li>
+                                        <li>Only use for true emergencies</li>
+                                        <li>Replenish after use</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-chart-line me-2"></i>Compound Interest</h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Start investing early</li>
+                                        <li>Reinvest dividends</li>
+                                        <li>Time is your greatest ally</li>
+                                        <li>Small amounts grow significantly over time</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-balance-scale me-2"></i>Diversification</h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Don't put all eggs in one basket</li>
+                                        <li>Mix stocks, bonds, real estate</li>
+                                        <li>Consider international exposure</li>
+                                        <li>Rebalance periodically</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-lightbulb me-2"></i>Smart Spending Tips</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h6><i class="fas fa-tags me-2"></i>Track Every Penny</h6>
+                                            <p>Use this tool to monitor all expenses and identify spending patterns.</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h6><i class="fas fa-clock me-2"></i>Wait 24 Hours</h6>
+                                            <p>For non-essential purchases over $100, wait 24 hours before buying.</p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h6><i class="fas fa-percentage me-2"></i>Pay Yourself First</h6>
+                                            <p>Automatically save 20% of income before spending on anything else.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk Management Tab -->
+                <div class="tab-pane fade" id="risk" role="tabpanel">
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-exclamation-triangle me-2"></i>Risk Management Fundamentals</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-chart-bar me-2"></i>Risk Assessment</h6>
+                                            <ul>
+                                                <li><span class="risk-level risk-low">Low Risk</span> - Government bonds, savings accounts</li>
+                                                <li><span class="risk-level risk-medium">Medium Risk</span> - Blue-chip stocks, index funds</li>
+                                                <li><span class="risk-level risk-high">High Risk</span> - Cryptocurrency, individual stocks</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6><i class="fas fa-shield-alt me-2"></i>Risk Mitigation</h6>
+                                            <ul>
+                                                <li>Diversify across asset classes</li>
+                                                <li>Maintain emergency fund</li>
+                                                <li>Use stop-loss orders</li>
+                                                <li>Regular portfolio rebalancing</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-chart-pie me-2"></i>Asset Allocation by Age</h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        <li><strong>20s-30s:</strong> 80% stocks, 20% bonds</li>
+                                        <li><strong>40s-50s:</strong> 60% stocks, 40% bonds</li>
+                                        <li><strong>60s+:</strong> 40% stocks, 60% bonds</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-exclamation-circle me-2"></i>Common Risk Mistakes</h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Investing without emergency fund</li>
+                                        <li>Putting all money in one stock</li>
+                                        <li>Timing the market</li>
+                                        <li>Ignoring inflation risk</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Biblical Wisdom Tab -->
+                <div class="tab-pane fade" id="biblical" role="tabpanel">
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="verse-card">
+                                <h4><i class="fas fa-cross me-2"></i>Biblical Wisdom on Money & Stewardship</h4>
+                                <p>"For where your treasure is, there your heart will be also." - Matthew 6:21</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-piggy-bank me-2"></i>Stewardship & Giving</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="verse-card">
+                                        <div class="verse-text">"Honor the Lord with your wealth and with the firstfruits of all your produce."</div>
+                                        <div class="verse-reference">Proverbs 3:9</div>
+                                        <span class="verse-category">Tithing</span>
+                                    </div>
+                                    <div class="verse-card">
+                                        <div class="verse-text">"Each one must give as he has decided in his heart, not reluctantly or under compulsion, for God loves a cheerful giver."</div>
+                                        <div class="verse-reference">2 Corinthians 9:7</div>
+                                        <span class="verse-category">Giving</span>
+                                    </div>
+                                    <div class="verse-card">
+                                        <div class="verse-text">"It is more blessed to give than to receive."</div>
+                                        <div class="verse-reference">Acts 20:35</div>
+                                        <span class="verse-category">Generosity</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-chart-line me-2"></i>Wealth & Prosperity</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="verse-card">
+                                        <div class="verse-text">"The blessing of the Lord makes rich, and he adds no sorrow with it."</div>
+                                        <div class="verse-reference">Proverbs 10:22</div>
+                                        <span class="verse-category">Blessing</span>
+                                    </div>
+                                    <div class="verse-card">
+                                        <div class="verse-text">"A good man leaves an inheritance to his children's children."</div>
+                                        <div class="verse-reference">Proverbs 13:22</div>
+                                        <span class="verse-category">Legacy</span>
+                                    </div>
+                                    <div class="verse-card">
+                                        <div class="verse-text">"Wealth gained hastily will dwindle, but whoever gathers little by little will increase it."</div>
+                                        <div class="verse-reference">Proverbs 13:11</div>
+                                        <span class="verse-category">Patience</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-exclamation-triangle me-2"></i>Warnings About Money</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="verse-card">
+                                        <div class="verse-text">"For the love of money is a root of all kinds of evils."</div>
+                                        <div class="verse-reference">1 Timothy 6:10</div>
+                                        <span class="verse-category">Warning</span>
+                                    </div>
+                                    <div class="verse-card">
+                                        <div class="verse-text">"No one can serve two masters... You cannot serve God and money."</div>
+                                        <div class="verse-reference">Matthew 6:24</div>
+                                        <span class="verse-category">Priority</span>
+                                    </div>
+                                    <div class="verse-card">
+                                        <div class="verse-text">"Keep your life free from love of money, and be content with what you have."</div>
+                                        <div class="verse-reference">Hebrews 13:5</div>
+                                        <span class="verse-category">Contentment</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-balance-scale me-2"></i>Planning & Wisdom</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="verse-card">
+                                        <div class="verse-text">"The plans of the diligent lead surely to abundance, but everyone who is hasty comes only to poverty."</div>
+                                        <div class="verse-reference">Proverbs 21:5</div>
+                                        <span class="verse-category">Planning</span>
+                                    </div>
+                                    <div class="verse-card">
+                                        <div class="verse-text">"In all toil there is profit, but mere talk tends only to poverty."</div>
+                                        <div class="verse-reference">Proverbs 14:23</div>
+                                        <span class="verse-category">Work</span>
+                                    </div>
+                                    <div class="verse-card">
+                                        <div class="verse-text">"The wise store up choice food and olive oil, but fools gulp theirs down."</div>
+                                        <div class="verse-reference">Proverbs 21:20</div>
+                                        <span class="verse-category">Saving</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-lightbulb me-2"></i>Additional Biblical Principles</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="verse-card">
+                                                <div class="verse-text">"The rich rules over the poor, and the borrower is the slave of the lender."</div>
+                                                <div class="verse-reference">Proverbs 22:7</div>
+                                                <span class="verse-category">Debt</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="verse-card">
+                                                <div class="verse-text">"Whoever is generous to the poor lends to the Lord, and he will repay him for his deed."</div>
+                                                <div class="verse-reference">Proverbs 19:17</div>
+                                                <span class="verse-category">Charity</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="verse-card">
+                                                <div class="verse-text">"Better is a little with righteousness than great revenues with injustice."</div>
+                                                <div class="verse-reference">Proverbs 16:8</div>
+                                                <span class="verse-category">Integrity</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-4">
+                                            <div class="verse-card">
+                                                <div class="verse-text">"A faithful man will abound with blessings, but whoever hastens to be rich will not go unpunished."</div>
+                                                <div class="verse-reference">Proverbs 28:20</div>
+                                                <span class="verse-category">Faithfulness</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="verse-card">
+                                                <div class="verse-text">"Give, and it will be given to you. Good measure, pressed down, shaken together, running over."</div>
+                                                <div class="verse-reference">Luke 6:38</div>
+                                                <span class="verse-category">Giving</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="verse-card">
+                                                <div class="verse-text">"But seek first the kingdom of God and his righteousness, and all these things will be added to you."</div>
+                                                <div class="verse-reference">Matthew 6:33</div>
+                                                <span class="verse-category">Priority</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
