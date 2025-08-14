@@ -323,6 +323,29 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+        .currency-selector-banner {
+            background: var(--cyan-gradient);
+            color: white;
+            padding: 18px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .currency-selector-banner .form-select {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: var(--dark-bg);
+            font-weight: 600;
+        }
+
+        .currency-selector-banner .form-select:focus {
+            background: white;
+            border-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        }
+
         .verse-card {
             background: var(--cyan-gradient);
             color: white;
@@ -378,6 +401,37 @@
             <div class="biblical-banner">
                 <i class="fas fa-cross me-2"></i>
                 <strong>"The blessing of the Lord makes rich, and he adds no sorrow with it."</strong> - Proverbs 10:22
+            </div>
+
+            <!-- Main Currency Selector -->
+            <div class="currency-selector-banner">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <i class="fas fa-globe me-2"></i>
+                        <strong>Main Display Currency:</strong>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-select" id="mainCurrency" style="max-width: 200px;">
+                            <optgroup label="Major Fiat">
+                                <option value="USD">USD - US Dollar</option>
+                                <option value="EUR">EUR - Euro</option>
+                                <option value="GBP">GBP - British Pound</option>
+                                <option value="JPY">JPY - Japanese Yen</option>
+                                <option value="CAD">CAD - Canadian Dollar</option>
+                                <option value="AUD">AUD - Australian Dollar</option>
+                                <option value="CHF">CHF - Swiss Franc</option>
+                                <option value="CNY">CNY - Chinese Yuan</option>
+                            </optgroup>
+                            <optgroup label="Major Crypto">
+                                <option value="BTC">BTC - Bitcoin</option>
+                                <option value="ETH">ETH - Ethereum</option>
+                                <option value="BNB">BNB - Binance Coin</option>
+                                <option value="USDT">USDT - Tether</option>
+                                <option value="USDC">USDC - USD Coin</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <!-- Navigation -->

@@ -5,6 +5,7 @@ class FinanceManager {
     constructor() {
         this.transactions = this.loadTransactions();
         this.budgetThreshold = this.loadBudgetThreshold();
+        this.mainCurrency = this.loadMainCurrency();
         this.expenseCategories = [
             'Food & Dining', 'Transportation', 'Housing', 'Utilities', 
             'Entertainment', 'Shopping', 'Healthcare', 'Education',
@@ -65,6 +66,7 @@ class FinanceManager {
     init() {
         this.setupEventListeners();
         this.updateCategoryOptions();
+        this.updateMainCurrencySelector();
         this.updateDashboard();
         this.updateCharts();
         this.updateSuggestions();
@@ -91,6 +93,11 @@ class FinanceManager {
         document.getElementById('budgetCurrency').addEventListener('change', () => {
             this.saveBudgetThreshold();
             this.updateBudgetProgress();
+        });
+
+        document.getElementById('mainCurrency').addEventListener('change', () => {
+            this.saveMainCurrency();
+            this.updateDashboard();
         });
     }
 
@@ -210,6 +217,13 @@ class FinanceManager {
         document.getElementById('totalSpent').textContent = this.formatCurrency(totalSpent);
         document.getElementById('totalInvested').textContent = this.formatCurrency(totalInvested);
         document.getElementById('remaining').textContent = this.formatCurrency(remaining);
+
+        // Update summary card titles to show main currency
+        const currencySymbol = this.getCurrencySymbol(this.mainCurrency);
+        document.querySelector('.summary-total h4').textContent = `Total Budget (${currencySymbol})`;
+        document.querySelector('.summary-expenses h4').textContent = `Total Spent (${currencySymbol})`;
+        document.querySelector('.summary-investments h4').textContent = `Total Invested (${currencySymbol})`;
+        document.querySelector('.summary-remaining h4').textContent = `Remaining (${currencySymbol})`;
     }
 
     updateCharts() {
@@ -439,7 +453,8 @@ class FinanceManager {
                         <small class="text-muted">${transaction.category} • ${new Date(transaction.date).toLocaleDateString()}</small>
                     </div>
                     <div class="text-end">
-                        <strong>${this.formatCurrency(transaction.amount)}</strong>
+                        <strong>${this.formatCurrency(transaction.amount, transaction.currency)}</strong>
+                        <small class="text-muted d-block">${transaction.currency}</small>
                         <button class="btn btn-sm btn-outline-danger ms-2" onclick="financeManager.deleteTransaction(${transaction.id})">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -450,10 +465,11 @@ class FinanceManager {
         });
     }
 
-    formatCurrency(amount) {
+    formatCurrency(amount, currency = null) {
+        const displayCurrency = currency || this.mainCurrency;
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
-            currency: 'USD'
+            currency: displayCurrency
         }).format(amount);
     }
 
@@ -481,6 +497,32 @@ class FinanceManager {
         document.getElementById('budgetCurrency').value = threshold.currency;
         
         return threshold;
+    }
+
+    loadMainCurrency() {
+        const saved = localStorage.getItem('financeMainCurrency');
+        return saved || 'USD';
+    }
+
+    saveMainCurrency() {
+        const currency = document.getElementById('mainCurrency').value;
+        this.mainCurrency = currency;
+        localStorage.setItem('financeMainCurrency', currency);
+    }
+
+    updateMainCurrencySelector() {
+        document.getElementById('mainCurrency').value = this.mainCurrency;
+    }
+
+    getCurrencySymbol(currency) {
+        const symbols = {
+            'USD': '$', 'EUR': '€', 'GBP': '£', 'JPY': '¥', 'CAD': 'C$',
+            'AUD': 'A$', 'CHF': 'CHF', 'CNY': '¥', 'SEK': 'kr', 'NZD': 'NZ$',
+            'MXN': '$', 'SGD': 'S$', 'HKD': 'HK$', 'NOK': 'kr', 'KRW': '₩',
+            'TRY': '₺', 'RUB': '₽', 'INR': '₹', 'BRL': 'R$', 'ZAR': 'R',
+            'BTC': '₿', 'ETH': 'Ξ', 'BNB': 'BNB', 'USDT': 'USDT', 'USDC': 'USDC'
+        };
+        return symbols[currency] || currency;
     }
 
     showNotification(message, type = 'info') {
@@ -604,7 +646,7 @@ function copyToClipboard() {
         transactions: financeManager.transactions
     };
     
-    const text = `Financial Summary (${new Date().toLocaleDateString()})
+    const text = `Financial Summary (${new Date().toLocaleDateString()}) - Main Currency: ${financeManager.mainCurrency}
     
 Total Budget: ${financeManager.formatCurrency(data.totalBudget)}
 Total Spent: ${financeManager.formatCurrency(data.totalSpent)}
@@ -613,7 +655,7 @@ Remaining: ${financeManager.formatCurrency(data.remaining)}
 
 Recent Transactions:
 ${data.transactions.slice(-10).map(t => 
-    `${t.date} - ${t.type.toUpperCase()}: ${t.description} (${t.category}) - ${financeManager.formatCurrency(t.amount)}`
+    `${t.date} - ${t.type.toUpperCase()}: ${t.description} (${t.category}) - ${financeManager.formatCurrency(t.amount, t.currency)} ${t.currency}`
 ).join('\n')}`;
 
     navigator.clipboard.writeText(text).then(() => {
