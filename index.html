@@ -387,6 +387,68 @@
             font-weight: 600;
             backdrop-filter: blur(10px);
         }
+
+        .verse-category {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        /* Photo Scanner Styles */
+        .upload-area {
+            border: 2px dashed var(--primary-color);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.05), rgba(var(--secondary-rgb), 0.05));
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: var(--secondary-color);
+            background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1), rgba(var(--secondary-rgb), 0.1));
+            transform: translateY(-2px);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--success-color);
+            background: linear-gradient(135deg, rgba(var(--success-rgb), 0.1), rgba(var(--primary-rgb), 0.1));
+        }
+
+        .upload-content {
+            color: var(--text-color);
+        }
+
+        .scanner-controls {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .scanned-results, .translation-section {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        #imageCanvas {
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+            background: var(--border-color);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -654,7 +716,12 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="rich-people-tab" data-bs-toggle="tab" data-bs-target="#rich-people" type="button" role="tab">
-                        <i class="fas fa-crown me-2"></i>Rich People & Influence
+                        <i class="fas fa-crown me-2"></i>Rich People
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="photo-scanner-tab" data-bs-toggle="tab" data-bs-target="#photo-scanner" type="button" role="tab">
+                        <i class="fas fa-camera me-2"></i>Photo Scanner
                     </button>
                 </li>
             </ul>
@@ -1502,12 +1569,96 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Photo Scanner Tab -->
+                <div class="tab-pane fade" id="photo-scanner" role="tabpanel">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5><i class="fas fa-camera me-2"></i>Photo Scanner & Translator</h5>
+                                        <p class="text-muted mb-0">Upload a photo with text to scan and translate. Works entirely in your browser - no data sent to servers.</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="upload-area" id="uploadArea">
+                                                    <div class="upload-content">
+                                                        <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+                                                        <h5>Upload Photo</h5>
+                                                        <p>Drag & drop or click to select an image</p>
+                                                        <input type="file" id="imageInput" accept="image/*" class="d-none">
+                                                        <button class="btn btn-primary" onclick="document.getElementById('imageInput').click()">
+                                                            <i class="fas fa-upload me-2"></i>Choose File
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <canvas id="imageCanvas" class="img-fluid d-none"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="scanner-controls">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Language Detection:</label>
+                                                        <select class="form-select" id="languageSelect">
+                                                            <option value="eng">English</option>
+                                                            <option value="ukr">Ukrainian</option>
+                                                            <option value="auto">Auto-detect</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <button class="btn btn-success w-100" id="scanButton" disabled>
+                                                            <i class="fas fa-search me-2"></i>Scan Text
+                                                        </button>
+                                                    </div>
+                                                    <div class="progress d-none" id="scanProgress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="scanned-results mt-4">
+                                                    <h6>Scanned Text:</h6>
+                                                    <textarea class="form-control" id="scannedText" rows="4" placeholder="Scanned text will appear here..."></textarea>
+                                                    <div class="mt-2">
+                                                        <button class="btn btn-outline-primary btn-sm" onclick="copyScannedText()">
+                                                            <i class="fas fa-copy me-1"></i>Copy
+                                                        </button>
+                                                        <button class="btn btn-outline-secondary btn-sm" onclick="clearScannedText()">
+                                                            <i class="fas fa-eraser me-1"></i>Clear
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="translation-section mt-4">
+                                                    <h6>Translation:</h6>
+                                                    <div class="input-group mb-2">
+                                                        <input type="text" class="form-control" id="translateInput" placeholder="Enter text to translate...">
+                                                        <button class="btn btn-outline-primary" onclick="translateText()">
+                                                            <i class="fas fa-language"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="translation-result">
+                                                        <textarea class="form-control" id="translationResult" rows="3" placeholder="Translation will appear here..." readonly></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.js"></script>
+    
+    <!-- Tesseract.js for OCR -->
+    <script src="https://unpkg.com/tesseract.js@5/dist/tesseract.min.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="script.js"></script>
 </body>

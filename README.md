@@ -59,6 +59,13 @@ A comprehensive, secure, and local financial management tool built with pure HTM
 - **Excel Export**: Download complete transaction data as Excel file
 - **Hide Numbers**: Privacy feature to blur financial amounts
 
+### 📷 Photo Scanner & OCR
+- **Text Extraction**: Scan text from images using Tesseract.js OCR
+- **Drag & Drop**: Easy image upload with drag and drop support
+- **Language Detection**: Support for English and Ukrainian text recognition
+- **Translation**: Built-in translation for Bible verses and common phrases
+- **100% Local**: All OCR processing happens in your browser
+
 ### 📚 Educational Content
 - **Financial Advice Tab**: Essential financial principles and best practices
 - **Risk Management Tab**: Investment risk assessment and mitigation strategies
@@ -100,6 +107,13 @@ A comprehensive, secure, and local financial management tool built with pure HTM
 - **Copy to Notes**: Click "Copy to Notes" button to copy summary to clipboard
 - **Excel Export**: Click "Export Excel" to download transaction data
 - **Hide Numbers**: Click "Hide Numbers" for privacy when sharing screen
+
+### Using Photo Scanner
+- **Upload Image**: Drag and drop or click to select an image with text
+- **Language Selection**: Choose English, Ukrainian, or auto-detect
+- **Scan Text**: Click "Scan Text" to extract text using OCR
+- **Copy Results**: Copy scanned text to clipboard for use elsewhere
+- **Translate**: Use the translation feature for Bible verses and common phrases
 
 ## 🎨 Design Features
 
